@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import DefaultComponent from '../components/DefaultComponent';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,9 +26,7 @@ export default class hellojs extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
+        <DefaultComponent title={'123'} />
       </View>
     );
   }
