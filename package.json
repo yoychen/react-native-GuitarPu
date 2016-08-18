@@ -1,0 +1,25 @@
+{
+  "name": "hellojs",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "dependencies": {
+    "react": "15.2.1",
+    "react-native": "0.31.0",
+    "react-native-router-flux": "^3.34.0",
+    "react-redux": "4.4.1",
+    "redux": "3.3.1",
+    "redux-promise": "0.5.3",
+    "redux-thunk": "2.0.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^6.0.3",
+    "eslint": "^2.8.0",
+    "eslint-config-airbnb": "^7.0.0",
+    "eslint-plugin-jsx-a11y": "0.6.2",
+    "eslint-plugin-react": "^4.2.3",
+    "redux-logger": "^2.6.1"
+  }
+}
