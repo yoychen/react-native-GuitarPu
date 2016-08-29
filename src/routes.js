@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { Scene, Router } from 'react-native-router-flux';
-import Hellojs from './containers/Hellojs';
+import EditTone from './containers/EditTone';
 import Hellojs2 from './containers/Hellojs2';
 // const Router = connect()(RNRF.Router);
 
@@ -28,13 +28,13 @@ const getSceneStyle = (props, computedProps) => {
     shadowRadius: null,
   };
   if (computedProps.isActive) {
-    style.marginTop = computedProps.hideNavBar ? 0 : 64;
-    style.marginBottom = computedProps.hideTabBar ? 0 : 50;
+    // style.marginTop = computedProps.hideNavBar ? 0 : 64;
+    // style.marginBottom = computedProps.hideTabBar ? 0 : 50;
   }
   return style;
 };
 
-export default class AppRoutes extends Component {
+class AppRoutes extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -44,8 +44,8 @@ export default class AppRoutes extends Component {
     return (
       <Router getSceneStyle={getSceneStyle}>
         <Scene key="root">
-          <Scene key="Hellojs" component={Hellojs} title="Hellojs" initial />
-          <Scene key="Hellojs2" component={Hellojs2} title="Hellojs2" />
+          <Scene key="Hellojs" hideNavBar={true} component={EditTone} title="EditTone" initial />
+          <Scene key="Hellojs2" hideNavBar={true} component={Hellojs2}  title="Hellojs2" />
         </Scene>
       </Router>
     );
