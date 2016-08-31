@@ -94,9 +94,9 @@ const TabView = (props, context) => {
       <View style={styles.drawerContent}>
         <Button transparent block style={styles.listBtn} onPress={() => { changePage(Actions.SongList) } }>
           <Icon name='md-musical-notes'/>
-          <Text>{wordSpace+' 線上精選'}</Text>
+          <Text>{wordSpace+' 創作大廳'}</Text>
         </Button>
-        <Button transparent block style={styles.listBtn} onPress={()=>Actions.refresh({key: 'IndexDrawer', open: value => !value })}>
+        <Button transparent block style={styles.listBtn} onPress={() => { changePage(Actions.MySongList) } }>
           <Icon name='md-brush' />
           <Text>{wordSpace+'我的創作'}</Text>
         </Button>
@@ -108,7 +108,7 @@ const TabView = (props, context) => {
           <Icon name='md-settings' />
           <Text>{wordSpace+'設定'}</Text>
         </Button>
-        <Button transparent block style={styles.listBtn} onPress={() => { changePage(Actions.EditTone) } }>
+        <Button transparent block style={styles.listBtn} onPress={Actions.Login}>
           <Icon name='md-log-out' />
           <Text>{wordSpace+'登出'}</Text>
         </Button>

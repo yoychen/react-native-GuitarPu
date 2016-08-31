@@ -96,7 +96,7 @@ class SongList extends Component {
           <Button transparent onPress={()=>Actions.refresh({key: 'IndexDrawer', open: value => !value })} >
             <Icon name="md-menu" />
           </Button>
-          <Title>創作大廳</Title>
+          <Title>我的創作</Title>
           <Button transparent>
             <Icon name="md-search" />
           </Button>

@@ -8,6 +8,7 @@ import Login from './containers/Login';
 import SignUp from './containers/SignUp';
 import IndexDrawer from './containers/IndexDrawer';
 import SongList from './containers/SongList';
+import MySongList from './containers/MySongList';
 // const Router = connect()(RNRF.Router);
 
 const styles = StyleSheet.create({
@@ -48,7 +49,7 @@ class AppRoutes extends Component {
     return (
       <Router getSceneStyle={getSceneStyle}>
         <Scene key="root" >
-        {/*  <Scene key="EditTone" duration={0} hideNavBar={true} component={EditTone} title="EditTone" />  */}
+          <Scene key="EditTone" duration={0} hideNavBar={true} component={EditTone} title="EditTone" />
           <Scene key="EditSongInfo" hideNavBar={true} component={EditSongInfo} title="EditSongInfo" />
           <Scene key="Login" hideNavBar={true} component={Login} type={ActionConst.REPLACE} title="Login"/>
           <Scene key="SignUp" hideNavBar={true} component={SignUp} type={ActionConst.REPLACE} title="SignUp" />
@@ -58,7 +59,7 @@ class AppRoutes extends Component {
               tabs={false}
             >
               <Scene key="SongList" component={SongList} type={ActionConst.REPLACE} hideNavBar={true} />
-              <Scene key="EditTone" component={SongList} type={ActionConst.REPLACE} hideNavBar={true} />
+              <Scene key="MySongList" component={MySongList} type={ActionConst.REPLACE} hideNavBar={true} />
             </Scene>
           </Scene>
         </Scene>
