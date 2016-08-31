@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(245, 252, 255, 0.66)',
+    backgroundColor: 'rgba(255, 252, 245, 0.66)',
     margin: 12,
     marginTop: 0,
     borderRadius: 2,
@@ -72,7 +72,7 @@ export default function DefaultComponent(props) {
           <Text style={styles.singer}>{props.singer}</Text>
         </View>
         <View style={styles.avatar}>
-          <Text style={styles.avatarText}>淵</Text>
+          <Text style={styles.avatarText}>{props.author[0]}</Text>
         </View>
       </View>
       <View style={styles.secRow}>

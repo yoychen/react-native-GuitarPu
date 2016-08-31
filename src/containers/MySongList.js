@@ -84,11 +84,33 @@ class SongList extends Component {
     super(props);
     this.state = {
       loading: true,
+      data: [],
     };
+    this.getSongList = this.getSongList.bind(this);
+    this.getSongList();
   }
 
+  getSongList = async () => {
+    let { name, singer, key, tone, lyrics } = this.props.song;
+    tone = JSON.stringify(tone);
+
+    const url = 'https://guitarpu-backend-sakuxz.c9users.io/api/song';
+    let res = await fetch(url,{
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    }).then((data) => data.json())
+      .catch((e) => console.log(e));
+
+    this.setState({
+      data: res.data,
+      loading: false,
+    });
+  }
 
   render() {
+    console.log(this.state.data);
     return (
       <View style={styles.container}>
         <Image source={require('../assets/list_bg.jpg')} style={styles.bgImg} />
@@ -108,15 +130,11 @@ class SongList extends Component {
             </Text>
             <View style={styles.titleBaseline} />
           </View>
-          <SongCard name="Dilemma" singer="Pay money To my Pain" />
-            <SongCard name="Dilemma" isLike={true} singer="Pay money To my Pain" />
-
-              <SongCard name="Dilemma" isLike={true} singer="Pay money To my Pain" />
-                <SongCard name="Dilemma" singer="Pay money To my Pain" />
-                  <SongCard name="Dilemma" singer="Pay money To my Pain" />
-
-                    <SongCard name="Dilemma" singer="Pay money To my Pain" />
-
+          {
+            this.state.data.map((e, i) => {
+              return <SongCard name={e.name} singer={e.singer} author={e.User.username} key={i} />
+            })
+          }
 
         </ScrollView>
         {

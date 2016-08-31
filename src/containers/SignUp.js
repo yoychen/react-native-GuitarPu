@@ -98,9 +98,10 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 15,
     width: 230,
+    marginRight: -18,
   },
   orText: {
-    // textAlign: 'center',
+    textAlign: 'center',
     fontSize: 18,
   },
   orWrapper: {

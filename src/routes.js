@@ -9,6 +9,7 @@ import SignUp from './containers/SignUp';
 import IndexDrawer from './containers/IndexDrawer';
 import SongList from './containers/SongList';
 import MySongList from './containers/MySongList';
+import VertifySong from './containers/VertifySong';
 // const Router = connect()(RNRF.Router);
 
 const styles = StyleSheet.create({
@@ -49,8 +50,9 @@ class AppRoutes extends Component {
     return (
       <Router getSceneStyle={getSceneStyle}>
         <Scene key="root" >
-          <Scene key="EditTone" duration={0} hideNavBar={true} component={EditTone} title="EditTone" />
           <Scene key="EditSongInfo" hideNavBar={true} component={EditSongInfo} title="EditSongInfo" />
+          <Scene key="EditTone" duration={0} hideNavBar={true} component={EditTone} title="EditTone" />
+          <Scene key="VertifySong" duration={0} hideNavBar={true} component={VertifySong} title="VertifySong" />
           <Scene key="Login" hideNavBar={true} component={Login} type={ActionConst.REPLACE} title="Login"/>
           <Scene key="SignUp" hideNavBar={true} component={SignUp} type={ActionConst.REPLACE} title="SignUp" />
           <Scene key="IndexDrawer" component={IndexDrawer} open={false} initial>

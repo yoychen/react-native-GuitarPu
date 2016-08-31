@@ -151,7 +151,7 @@ class EditTone extends Component {
           </Button>
           <Title>編輯吉他譜</Title>
           <Button transparent>
-            <Icon name='md-checkmark' />
+            <Icon name='md-checkmark' onPress={Actions.VertifySong} />
           </Button>
         </Header>
         <ScrollView>
