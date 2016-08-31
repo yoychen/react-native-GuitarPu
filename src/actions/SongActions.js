@@ -1,4 +1,7 @@
 export const SET_LYRICS = 'SET_LYRICS';
+export const SET_KEY = 'SET_KEY';
+export const SET_SINGER = 'SET_SINGER';
+export const SET_NAME = 'SET_NAME';
 export const ADD_TONE = 'ADD_TONE';
 export const REMOVE_TONE = 'REMOVE_TONE';
 
@@ -14,6 +17,33 @@ export async function setLyrics(lyrics) {
     dispatch({
       type: SET_LYRICS,
       lyrics,
+    });
+  };
+}
+
+export async function setName(name) {
+  return (dispatch) => {
+    dispatch({
+      type: SET_NAME,
+      name,
+    });
+  };
+}
+
+export async function setSinger(singer) {
+  return (dispatch) => {
+    dispatch({
+      type: SET_SINGER,
+      singer,
+    });
+  };
+}
+
+export async function setKey(key) {
+  return (dispatch) => {
+    dispatch({
+      type: SET_KEY,
+      key,
     });
   };
 }

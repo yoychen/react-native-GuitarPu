@@ -1,10 +1,16 @@
 import {
   SET_LYRICS,
+  SET_SINGER,
+  SET_NAME,
+  SET_KEY,
   ADD_TONE,
   REMOVE_TONE,
 } from '../actions/SongActions';
 
 export function song(state = {
+  name: '',
+  singer: '',
+  key: 'C',
   lyrics: '',
   tone: [],
 }, action) {
@@ -12,6 +18,18 @@ export function song(state = {
     case SET_LYRICS:
       return Object.assign({}, state, {
         lyrics: action.lyrics,
+      });
+    case SET_NAME:
+      return Object.assign({}, state, {
+        name: action.name,
+      });
+    case SET_KEY:
+      return Object.assign({}, state, {
+        key: action.key,
+      });
+    case SET_SINGER:
+      return Object.assign({}, state, {
+        singer: action.singer,
       });
     case ADD_TONE:
       let res = Object.assign({}, state);

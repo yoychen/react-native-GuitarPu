@@ -15,6 +15,7 @@ import {
   TouchableOpacity,
   Dimensions,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import { setLyrics, addTone, removeTone } from '../actions/SongActions';
 import { Actions } from 'react-native-router-flux';
@@ -71,13 +72,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#fffbe2',
     elevation: 0,
   },
+  spinner: {
+    height: 38,
+    width: 38,
+    borderRadius: 100,
+    backgroundColor: 'white',
+    elevation: 2,
+    position: 'absolute',
+    top: 85,
+    left: width / 2 - 19,
+  }
 });
 
 class EditTone extends Component {
   constructor(props) {
     super(props);
-    const defaultLyrics = '然後呢\n他們說你的心似乎痊癒了\n也開始有個人\n為你守護著\n待著 淚水中能看到 你真的 自由了';
-    this.props.setLyrics(defaultLyrics);
     this.toggleModal = this.toggleModal.bind(this);
     this.addNewTone = this.addNewTone.bind(this);
     this.state = {
@@ -86,8 +95,14 @@ class EditTone extends Component {
       key: '_',
       subkey: '_',
       subtext: '_',
+      loading: false,
     };
     console.disableYellowBox = true;
+    // const defaultLyrics = '然後呢\n他們說你的心似乎痊癒了\n也開始有個人\n為你守護著\n待著 淚水中能看到 你真的 自由了';
+    // this.props.setLyrics(defaultLyrics);
+  }
+
+  componentDidMount() {
   }
 
   addNewTone() {
@@ -131,12 +146,12 @@ class EditTone extends Component {
     return (
       <View style={styles.container}>
         <Header style={{backgroundColor: "rgb(122, 68, 37)"}}>
-          <Button transparent>
+          <Button transparent onPress={Actions.pop} >
             <Icon name='ios-arrow-back' />
           </Button>
           <Title>編輯吉他譜</Title>
           <Button transparent>
-            <Icon name='ios-menu' />
+            <Icon name='md-checkmark' />
           </Button>
         </Header>
         <ScrollView>
@@ -172,6 +187,14 @@ class EditTone extends Component {
             }
           </View>
         </ScrollView>
+        {
+          this.state.loading ?
+            <ActivityIndicator
+              animating={this.state.loading}
+              style={styles.spinner}
+              color='rgb(213, 179, 36)'
+            /> : null
+        }
         <View style={styles.footer} >
           <View style={styles.footerItem} >
             <Picker

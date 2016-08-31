@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Navigator } from 'react-native';
 import { connect } from 'react-redux';
-import { Scene, Router } from 'react-native-router-flux';
+import { Scene, Router, ActionConst } from 'react-native-router-flux';
 import EditTone from './containers/EditTone';
-import Hellojs2 from './containers/Hellojs2';
+import EditSongInfo from './containers/EditSongInfo';
+import Login from './containers/Login';
+import SignUp from './containers/SignUp';
+import IndexDrawer from './containers/IndexDrawer';
+import SongList from './containers/SongList';
 // const Router = connect()(RNRF.Router);
 
 const styles = StyleSheet.create({
@@ -21,7 +25,7 @@ const styles = StyleSheet.create({
 const getSceneStyle = (props, computedProps) => {
   const style = {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fffbe2',
     shadowColor: null,
     shadowOffset: null,
     shadowOpacity: null,
@@ -43,9 +47,20 @@ class AppRoutes extends Component {
   render() {
     return (
       <Router getSceneStyle={getSceneStyle}>
-        <Scene key="root">
-          <Scene key="Hellojs" hideNavBar={true} component={EditTone} title="EditTone" initial />
-          <Scene key="Hellojs2" hideNavBar={true} component={Hellojs2}  title="Hellojs2" />
+        <Scene key="root" >
+        {/*  <Scene key="EditTone" duration={0} hideNavBar={true} component={EditTone} title="EditTone" />  */}
+          <Scene key="EditSongInfo" hideNavBar={true} component={EditSongInfo} title="EditSongInfo" />
+          <Scene key="Login" hideNavBar={true} component={Login} type={ActionConst.REPLACE} title="Login"/>
+          <Scene key="SignUp" hideNavBar={true} component={SignUp} type={ActionConst.REPLACE} title="SignUp" />
+          <Scene key="IndexDrawer" component={IndexDrawer} open={false} initial>
+            <Scene
+              key="main"
+              tabs={false}
+            >
+              <Scene key="SongList" component={SongList} type={ActionConst.REPLACE} hideNavBar={true} />
+              <Scene key="EditTone" component={SongList} type={ActionConst.REPLACE} hideNavBar={true} />
+            </Scene>
+          </Scene>
         </Scene>
       </Router>
     );
