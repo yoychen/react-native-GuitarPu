@@ -110,9 +110,9 @@ class SongList extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // if (prevProps.reload) {
-    //   this.getSongList();
-    // }
+    if (prevProps.reload !== this.props.reload) {
+      this.getSongList();
+    }
   }
 
   render() {
@@ -132,13 +132,17 @@ class SongList extends Component {
         <ScrollView style={{ paddingTop: 12, paddingBottom: 12 }} >
           <View style={styles.titleWrapper}>
             <Text style={styles.titleText} >
-              熱門吉他譜
+              Lastest
             </Text>
             <View style={styles.titleBaseline} />
           </View>
           {
             this.state.data.map((e, i) => {
-              return <SongCard name={e.name} singer={e.singer} author={e.User.username} key={i} />
+              return (
+                <TouchableOpacity onPress={() => {Actions.SongViewer({ id: e.id })}} key={i} >
+                  <SongCard name={e.name} singer={e.singer} author={e.User.username} songKey={e.key} likes={e.Likes} />
+                </TouchableOpacity>
+              )
             })
           }
 

@@ -76,6 +76,7 @@ class EditSongInfo extends Component {
     this.state = {
       loading: false,
     };
+    console.disableYellowBox = true;
   }
 
 

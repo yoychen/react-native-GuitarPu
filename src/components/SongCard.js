@@ -36,18 +36,18 @@ const styles = StyleSheet.create({
     width: 38,
     height: 38,
     borderRadius: 100,
-    backgroundColor: 'rgb(232, 174, 75)',
+    // backgroundColor: 'rgb(232, 174, 75)',
     justifyContent: 'center',
     marginTop: 8,
     marginLeft: 2,
-    // borderWidth: 2,
-    // borderColor: 'rgb(255, 79, 79)',
+    borderWidth: 0.6,
+    borderColor: 'rgb(255, 150, 150)',
   },
   avatarText: {
     textAlign: 'center',
     fontSize: 17,
-    color: 'rgb(255, 242, 221)',
-    // color: 'rgb(89, 63, 21)',
+    // color: 'rgb(255, 242, 221)',
+    color: 'rgb(230, 83, 83)',
   },
   name: {
     fontSize: 23,
@@ -72,17 +72,19 @@ export default function DefaultComponent(props) {
           <Text style={styles.singer}>{props.singer}</Text>
         </View>
         <View style={styles.avatar}>
-          <Text style={styles.avatarText}>{props.author[0]}</Text>
+          <Text style={styles.avatarText}>{props.songKey}</Text>
         </View>
       </View>
       <View style={styles.secRow}>
-        <TouchableOpacity onPress={() => {}} style={{ flex: 1 }}>
+        <TouchableOpacity onPress={() => {}} style={{ width: 100, flexDirection: 'row' }}>
           {
             (props.isLike) ?
               <Icon name="heart" style={styles.btnIcon} /> :
               <Icon name="heart-o" style={styles.btnIcon} />
           }
+          <Text style={{ marginLeft: 8 }}>{props.likes.length}</Text>
         </TouchableOpacity>
+        <View style={{ flex:1 }} />
       </View>
     </View>
   );

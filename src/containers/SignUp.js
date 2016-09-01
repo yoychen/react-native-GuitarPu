@@ -77,11 +77,9 @@ const styles = StyleSheet.create({
   },
   titleText: {
     position: 'absolute',
-    top: -6,
-    top: -18,
+    top: -10,
     left: 50,
     fontSize: 54,
-    fontSize: 65,
     zIndex: 1000,
     elevation: 2,
     color: 'rgb(55, 27, 8)',
