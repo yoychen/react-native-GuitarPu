@@ -107,11 +107,11 @@ class TabView extends Component {
             <Icon name='md-brush' />
             <Text>{wordSpace+'我的創作'}</Text>
           </Button>
-          <Button transparent block style={styles.listBtn} onPress={Actions.EditSongInfo}>
+          <Button transparent block style={styles.listBtn} onPress={() => { changePage(Actions.LikesSongList) } }>
             <Icon name='md-heart' />
             <Text>{wordSpace+'收藏'}</Text>
           </Button>
-          <Button transparent block style={styles.listBtn} onPress={Actions.EditTone}>
+          <Button transparent block style={styles.listBtn} onPress={() => {}}>
             <Icon name='md-settings' />
             <Text>{wordSpace+'設定'}</Text>
           </Button>

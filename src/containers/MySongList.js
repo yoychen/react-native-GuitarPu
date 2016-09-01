@@ -21,6 +21,7 @@ import {
   ScrollView,
   ActivityIndicator,
   Image,
+  AsyncStorage,
 } from 'react-native';
 import { setLyrics, setSinger, setKey, setName } from '../actions/SongActions';
 import { Actions } from 'react-native-router-flux';
@@ -91,14 +92,16 @@ class SongList extends Component {
   }
 
   getSongList = async () => {
+    let token = await AsyncStorage.getItem('token');
     let { name, singer, key, tone, lyrics } = this.props.song;
     tone = JSON.stringify(tone);
 
-    const url = 'https://guitarpu-backend-sakuxz.c9users.io/api/song';
+    const url = 'https://guitarpu-backend-sakuxz.c9users.io/api/song/me';
     let res = await fetch(url,{
       method: 'GET',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
+        'x-access-token': token,
       },
     }).then((data) => data.json())
       .catch((e) => console.log(e));
@@ -109,19 +112,13 @@ class SongList extends Component {
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.reload) {
-      this.getSongList();
-    }
-  }
-
   render() {
     console.log(this.state.data);
     return (
       <View style={styles.container}>
         <Image source={require('../assets/list_bg.jpg')} style={styles.bgImg} />
         <Header style={{ backgroundColor: 'rgb(122, 68, 37)' }}>
-          <Button transparent onPress={()=>Actions.refresh({key: 'IndexDrawer', open: value => !value })} >
+          <Button transparent onPress={() => Actions.refresh({key: 'IndexDrawer', open: value => !value })} >
             <Icon name="md-menu" />
           </Button>
           <Title>我的創作</Title>
@@ -130,15 +127,13 @@ class SongList extends Component {
           </Button>
         </Header>
         <ScrollView style={{ paddingTop: 12, paddingBottom: 12 }} >
-          <View style={styles.titleWrapper}>
-            <Text style={styles.titleText} >
-              熱門吉他譜
-            </Text>
-            <View style={styles.titleBaseline} />
-          </View>
           {
             this.state.data.map((e, i) => {
-              return <SongCard name={e.name} singer={e.singer} author={e.User.username} key={i} />
+              return (
+                <TouchableOpacity onPress={() => {Actions.SongViewer({ id: e.id })}} key={e.id} >
+                  <SongCard hideLike={true} resetSongList={this.getSongList} id={e.id} name={e.name} singer={e.singer} songKey={e.key} />
+                </TouchableOpacity>
+              )
             })
           }
 

@@ -4,6 +4,7 @@ import {
   View,
   TouchableOpacity,
   Dimensions,
+  AsyncStorage,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 const StyleSheet = require('../utils/F8StyleSheet');
@@ -58,12 +59,13 @@ const styles = StyleSheet.create({
   },
   btnIcon: {
     fontSize: 18,
-    color: 'rgb(205, 171, 81)',
-    color: 'rgb(111, 88, 52)',
+    // color: 'rgb(205, 171, 81)',
+    // color: 'rgb(111, 88, 52)',
+    color: 'rgb(156, 84, 44)',
   },
 });
 
-export default function DefaultComponent(props) {
+export default function SongCard(props) {
   return (
     <View style={styles.card}>
       <View style={styles.row}>
@@ -75,25 +77,71 @@ export default function DefaultComponent(props) {
           <Text style={styles.avatarText}>{props.songKey}</Text>
         </View>
       </View>
-      <View style={styles.secRow}>
-        <TouchableOpacity onPress={() => {}} style={{ width: 100, flexDirection: 'row' }}>
-          {
-            (props.isLike) ?
-              <Icon name="heart" style={styles.btnIcon} /> :
-              <Icon name="heart-o" style={styles.btnIcon} />
-          }
-          <Text style={{ marginLeft: 8 }}>{props.likes.length}</Text>
-        </TouchableOpacity>
-        <View style={{ flex:1 }} />
-      </View>
+      {
+        (props.hideLike) ?
+          <View style={{ margin: 11 }} /> :
+          <View style={styles.secRow}>
+            <TouchableOpacity onPress={() => {handleLike(props.isLike, props.id, props.resetSongList)}} style={{ width: 100, flexDirection: 'row' }}>
+              {
+                (props.isLike) ?
+                <Icon name="heart" style={styles.btnIcon} /> :
+                  <Icon name="heart-o" style={styles.btnIcon} />
+                }
+                <Text style={{ marginLeft: 8 }}>{props.likes.length}</Text>
+              </TouchableOpacity>
+              <View style={{ flex: 1 }} />
+            </View>
+      }
     </View>
   );
 }
 
-DefaultComponent.propTypes = {
+SongCard.propTypes = {
   title: React.PropTypes.string,
 };
 
-DefaultComponent.defaultProps = {
+SongCard.defaultProps = {
   title: '',
 };
+
+async function likeSong(songId, reset) {
+  let token = await AsyncStorage.getItem('token');
+
+  const url = 'https://guitarpu-backend-sakuxz.c9users.io/api/like';
+  let res = await fetch(url,{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'x-access-token': token,
+    },
+    body: `SongId=${songId}`,
+  }).then((data) => data.json())
+    .catch((e) => console.log(e));
+
+  reset();
+}
+
+async function unlikeSong(songId, reset) {
+  let token = await AsyncStorage.getItem('token');
+
+  const url = 'https://guitarpu-backend-sakuxz.c9users.io/api/like';
+  let res = await fetch(url,{
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'x-access-token': token,
+    },
+    body: `SongId=${songId}`,
+  }).then((data) => data.json())
+    .catch((e) => console.log(e));
+
+  reset();
+}
+
+function handleLike(isLike, sid, reset) {
+  if (isLike) {
+    unlikeSong(sid, reset);
+  } else {
+    likeSong(sid, reset);
+  }
+}

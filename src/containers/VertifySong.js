@@ -126,7 +126,7 @@ class VertifySong extends Component {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'x-access-token': token
+        'x-access-token': token,
       },
       body: `name=${name}&singer=${singer}&key=${key}&tone=${tone}&lyrics=${lyrics}`,
     }).then((data) => data.json())

@@ -9,6 +9,7 @@ import SignUp from './containers/SignUp';
 import IndexDrawer from './containers/IndexDrawer';
 import SongList from './containers/SongList';
 import MySongList from './containers/MySongList';
+import LikesSongList from './containers/LikesSongList';
 import VertifySong from './containers/VertifySong';
 import SongViewer from './containers/SongViewer';
 // const Router = connect()(RNRF.Router);
@@ -64,6 +65,7 @@ class AppRoutes extends Component {
             >
               <Scene key="SongList" component={SongList} type={ActionConst.REPLACE} hideNavBar={true} />
               <Scene key="MySongList" component={MySongList} type={ActionConst.REPLACE} hideNavBar={true} />
+              <Scene key="LikesSongList" component={LikesSongList} type={ActionConst.REPLACE} hideNavBar={true} />
             </Scene>
           </Scene>
         </Scene>

@@ -89,9 +89,6 @@ class SongList extends Component {
     };
     this.getSongList = this.getSongList.bind(this);
     this.getSongList();
-    // setInterval(function () {
-    //   this.getSongList();
-    // }.bind(this), 800);
   }
 
   getSongList = async () => {
@@ -99,7 +96,7 @@ class SongList extends Component {
     let { name, singer, key, tone, lyrics } = this.props.song;
     tone = JSON.stringify(tone);
 
-    const url = 'https://guitarpu-backend-sakuxz.c9users.io/api/song';
+    const url = 'https://guitarpu-backend-sakuxz.c9users.io/api/song/like';
     let res = await fetch(url,{
       method: 'GET',
       headers: {
@@ -124,23 +121,17 @@ class SongList extends Component {
           <Button transparent onPress={() => Actions.refresh({key: 'IndexDrawer', open: value => !value })} >
             <Icon name="md-menu" />
           </Button>
-          <Title>創作大廳</Title>
+          <Title>收藏庫</Title>
           <Button transparent>
             <Icon name="md-search" />
           </Button>
         </Header>
         <ScrollView style={{ paddingTop: 12, paddingBottom: 12 }} >
-          <View style={styles.titleWrapper}>
-            <Text style={styles.titleText} >
-              Lastest
-            </Text>
-            <View style={styles.titleBaseline} />
-          </View>
           {
             this.state.data.map((e, i) => {
               return (
                 <TouchableOpacity onPress={() => {Actions.SongViewer({ id: e.id })}} key={e.id} >
-                  <SongCard resetSongList={this.getSongList} id={e.id} name={e.name} singer={e.singer} author={e.User.username} songKey={e.key} likes={e.Likes} isLike={e.isLike} />
+                  <SongCard hideLike={true} resetSongList={this.getSongList} id={e.Song.id} name={e.Song.name} singer={e.Song.singer} songKey={e.Song.key} />
                 </TouchableOpacity>
               )
             })
