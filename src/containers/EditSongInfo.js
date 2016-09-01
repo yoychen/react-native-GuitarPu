@@ -82,7 +82,7 @@ class EditSongInfo extends Component {
 
   render() {
     console.log(this.state);
-    const tones = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+    const tones = ['_', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
     const { name, singer, key, lyrics } = this.props.song;
     let disabled = true;
     let disabledBtn = styles.disabledBtn;

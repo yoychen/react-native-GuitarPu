@@ -88,6 +88,9 @@ class SongList extends Component {
     };
     this.getSongList = this.getSongList.bind(this);
     this.getSongList();
+    // setInterval(function () {
+    //   this.getSongList();
+    // }.bind(this), 800);
   }
 
   getSongList = async () => {
@@ -110,9 +113,6 @@ class SongList extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.reload !== this.props.reload) {
-      this.getSongList();
-    }
   }
 
   render() {

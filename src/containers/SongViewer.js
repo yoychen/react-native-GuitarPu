@@ -94,8 +94,7 @@ const styles = StyleSheet.create({
   },
   key: {
     color: 'rgb(33, 180, 145)',
-    marginTop: 5,
-    fontSize: 20,
+    width: 80,
   }
 });
 
@@ -111,6 +110,8 @@ class SongViewer extends Component {
       lyrics: '',
     };
     this.getSong(this.props.id);
+    this.modulateTones = this.modulateTones.bind(this);
+    console.disableYellowBox = true;
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -143,14 +144,36 @@ class SongViewer extends Component {
       name: res.data.name,
       singer: res.data.singer,
       key: res.data.key,
+      oriKey: res.data.key,
       tone: JSON.parse(res.data.tone),
       lyrics: res.data.lyrics,
       loading: false,
     });
   }
 
+  modulate(key, to, ori) {
+    const table = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
+    let gap = table.indexOf(key) + table.indexOf(to) - table.indexOf(ori);
+    if(gap < 0){
+      gap = table.length - ( 0 - gap );
+    }
+    gap = gap % table.length;
+    return table[gap];
+  }
+
+  modulateTones(key) {
+    let newTone = this.state.tone.map((e) => {
+      if(e === null) return null;
+      e.key = this.modulate(e.key, key, this.state.oriKey);
+      return e;
+    });
+    console.log(newTone);
+    this.setState({ tone: newTone, oriKey: key });
+  }
+
   render() {
-    const tones = ['_', 'C', 'D', 'E', 'F', 'G', 'A', 'B'];
+    const tones = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
+    const tonesc = ['_', 'C', 'D', 'E', 'F', 'G', 'A', 'B'];
     let colors = ['white', 'rgb(255, 48, 48)', 'rgb(235, 46, 46)', 'rgb(212, 36, 36)', 'rgb(193, 35, 35)', 'rgb(162, 29, 29)', 'rgb(144, 23, 23)', 'rgb(107, 15, 15)'];
     return (
       <View style={styles.container}>
@@ -164,7 +187,22 @@ class SongViewer extends Component {
           <View style={styles.songInfo}>
             <Text style={styles.name} >{this.state.name}</Text>
             <Text style={styles.singer} >{this.state.singer}</Text>
-            <Text style={styles.key} >{this.state.key}</Text>
+            {
+              (this.state.key === '') ? null :
+                <Picker
+                  style={styles.key}
+                  iosHeader="Select one"
+                  mode="dropdown"
+                  selectedValue={this.state.key}
+                  onValueChange={(key) => {this.modulateTones(key); this.setState({key});} }
+                >
+                  {
+                    tones.map((e, i) => {
+                      return <Item label={e} key={i} value={e} />
+                    })
+                  }
+                </Picker>
+            }
           </View>
           <View style={styles.list}>
             {
@@ -178,7 +216,7 @@ class SongViewer extends Component {
                 let tone = <View />;
                 const t = this.state.tone[i];
                 if (t) {
-                  let color = colors[tones.indexOf(t.key[0])];
+                  let color = colors[tonesc.indexOf(t.key[0])];
                   tone = <Text style={[styles.tone,{color}]}>{t.key+t.sub}</Text>
                 }
                 const letterSelect = (i === this.state.selectChar) ? styles.letterSelect : {};

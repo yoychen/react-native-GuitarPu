@@ -120,7 +120,7 @@ class EditTone extends Component {
     this.state.subtext = (this.state.subtext === '_') ? '' : this.state.subtext;
     this.props.addTone({
       charAt: this.state.selectChar,
-      key: this.state.key + this.state.subkey,
+      key: this.state.key, // + this.state.subkey,
       sub: this.state.subtext,
     }, this.state.selectChar);
   }
@@ -139,9 +139,9 @@ class EditTone extends Component {
   }
 
   render() {
-    const tones = ['_', 'C', 'D', 'E', 'F', 'G', 'A', 'B'];
+    const ctones = ['_', 'C', 'D', 'E', 'F', 'G', 'A', 'B'];
+    const tones = ['_', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B', '_'];
     let colors = ['white', 'rgb(255, 48, 48)', 'rgb(235, 46, 46)', 'rgb(212, 36, 36)', 'rgb(193, 35, 35)', 'rgb(162, 29, 29)', 'rgb(144, 23, 23)', 'rgb(107, 15, 15)'];
-    // colors = ['white', "#6d59e0", "#52adbf", "#c5edf9", "#244da5", "#39a9ce", "#3e5fd6", "#239ddb"]
     let disabledBtn = (this.state.selectChar === -1)?styles.disabledBtn:{};
     return (
       <View style={styles.container}>
@@ -172,7 +172,7 @@ class EditTone extends Component {
                 // });
                 const t = this.props.song.tone[i];
                 if (t) {
-                  let color = colors[tones.indexOf(t.key[0])];
+                  let color = colors[ctones.indexOf(t.key[0])];
                   tone = <Text style={[styles.tone,{color}]}>{t.key+t.sub}</Text>
                 }
                 const letterSelect = (i === this.state.selectChar) ? styles.letterSelect : {};
@@ -207,7 +207,7 @@ class EditTone extends Component {
               }
             </Picker>
           </View>
-          <View style={styles.footerItem} >
+          {/*<View style={styles.footerItem} >
             <Picker
               iosHeader="Select one"
               mode="dropdown"
@@ -217,7 +217,7 @@ class EditTone extends Component {
               <Item label="#" value="#" />
               <Item label="b" value="b" />
             </Picker>
-          </View>
+          </View>*/}
           <View style={styles.footerItem} >
             <Picker
               iosHeader="Select one"
