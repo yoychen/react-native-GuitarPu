@@ -18,6 +18,7 @@ import {
   ActivityIndicator,
   Alert,
   AsyncStorage,
+  Image,
 } from 'react-native';
 import { resetSong } from '../actions/SongActions';
 import { Actions } from 'react-native-router-flux';
@@ -34,8 +35,10 @@ const styles = StyleSheet.create({
     padding: 13,
     margin: 10,
     borderRadius: 3,
-    borderColor: '#e0ddc8',
-    borderWidth: 1,
+    elevation: 1.5,
+    backgroundColor: 'rgba(250, 247, 232, 0.65)',
+    // borderColor: '#e0ddc8',
+    // borderWidth: 1,
   },
   letter: {
     width: 25,
@@ -95,7 +98,14 @@ const styles = StyleSheet.create({
   key: {
     color: 'rgb(33, 180, 145)',
     width: 80,
-  }
+  },
+  bgImg: {
+    width,
+    height,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
 });
 
 class SongViewer extends Component {
@@ -177,6 +187,8 @@ class SongViewer extends Component {
     let colors = ['white', 'rgb(255, 48, 48)', 'rgb(235, 46, 46)', 'rgb(212, 36, 36)', 'rgb(193, 35, 35)', 'rgb(162, 29, 29)', 'rgb(144, 23, 23)', 'rgb(107, 15, 15)'];
     return (
       <View style={styles.container}>
+        <Image source={require('../assets/songview_bg.jpg')} style={styles.bgImg} />
+
         <Header style={{backgroundColor: "rgb(122, 68, 37)"}}>
           <Button transparent onPress={Actions.pop} >
             <Icon name='ios-arrow-back' />
