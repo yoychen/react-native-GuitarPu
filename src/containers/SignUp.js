@@ -22,8 +22,9 @@ import {
   ActivityIndicator,
   TextInput,
   Image,
+  Alert,
 } from 'react-native';
-import { setLyrics, setSinger, setKey, setName } from '../actions/SongActions';
+import { setUserInfo } from '../actions/UserActions';
 import { Actions } from 'react-native-router-flux';
 const { height, width } = Dimensions.get('window');
 
@@ -128,15 +129,50 @@ class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: '',
+      password: '',
     };
+    this.register = this.register.bind(this);
+    this.isSended = false;
   }
 
+  register = async () => {
+    const { username, password } = this.state;
+    console.log('============================'+(username === '' || password === '') );
+    if (username === '' || password === '') {
+      Alert.alert('Info', 'empty field');
+      return;
+    }
+    if (this.isSended) return;
+    this.isSended = true;
+
+    const url = 'https://guitarpu-backend-sakuxz.c9users.io/api/user';
+    let res = await fetch(url,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `username=${username}&password=${password}`,
+    }).then((data) => data.json()).catch((e) => {
+      console.log('eeeeeeeeeerrrrrrrrr');
+      return resolve(false);
+    });
+    console.log('res>>>>>>>>>.'+res);
+    if (res) {
+      this.isSended = false;
+      Alert.alert('Info', 'register success');
+      Actions.Login();
+    } else {
+      Alert.alert('Info', 'username was duplicate');
+      this.isSended = false;
+    }
+  }
 
   render() {
     console.log(this.state);
     return (
       <View style={styles.container}>
-         <Image source={require('../assets/bgbg.jpg')} style={styles.bgImg} />
+         <Image source={require('../assets/signup_bg.jpg')} style={styles.bgImg} />
          <View style={styles.title}>
            <Text style={styles.titleText}>SignUp</Text>
          </View>
@@ -144,16 +180,16 @@ class SignUp extends Component {
            <ListItem style={{ marginTop: 15 }}>
              <InputGroup borderType="regular" style={{ borderRadius: 5 }} >
                <Icon name="ios-person" />
-               <Input placeholder="EMAIL" />
+               <Input onChangeText={(username) => {this.setState({username})}} placeholder="NAME" />
              </InputGroup>
            </ListItem>
            <ListItem style={{ marginTop: 10 }}>
              <InputGroup borderType="regular" style={{ borderRadius: 5 }} >
                <Icon name="ios-unlock" />
-               <Input placeholder="PASSWORD" secureTextEntry={true}/>
+               <Input onChangeText={(password) => {this.setState({password})}} placeholder="PASSWORD" secureTextEntry={true}/>
              </InputGroup>
            </ListItem>
-           <Button style={styles.submitBtn} block warning> 註冊 </Button>
+           <Button onPress={this.register} style={styles.submitBtn} block warning> 註冊 </Button>
            <View style={{ alignItems: 'center' }}>
              <View style={styles.orWrapper}>
                <Text style={styles.orText}>or</Text>
@@ -172,15 +208,12 @@ class SignUp extends Component {
 function injectPropsFromStore(state) {
   console.log(state);
   return {
-    song: state.song,
+    user: state.user,
   };
 }
 
 const injectPropsFormActions = {
-  setLyrics,
-  setKey,
-  setName,
-  setSinger,
+  setUserInfo,
 };
 
 export default connect(injectPropsFromStore, injectPropsFormActions)(SignUp);

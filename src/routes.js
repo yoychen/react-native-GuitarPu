@@ -53,9 +53,9 @@ class AppRoutes extends Component {
           <Scene key="EditSongInfo" hideNavBar={true} component={EditSongInfo} title="EditSongInfo" />
           <Scene key="EditTone" duration={0} hideNavBar={true} component={EditTone} title="EditTone" />
           <Scene key="VertifySong" duration={0} hideNavBar={true} component={VertifySong} title="VertifySong" />
-          <Scene key="Login" hideNavBar={true} component={Login} type={ActionConst.REPLACE} title="Login"/>
+          <Scene key="Login" hideNavBar={true} component={Login} type={ActionConst.REPLACE} title="Login" initial />
           <Scene key="SignUp" hideNavBar={true} component={SignUp} type={ActionConst.REPLACE} title="SignUp" />
-          <Scene key="IndexDrawer" component={IndexDrawer} open={false} initial>
+          <Scene key="IndexDrawer" component={IndexDrawer} open={false} >
             <Scene
               key="main"
               tabs={false}

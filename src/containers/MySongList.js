@@ -109,6 +109,12 @@ class SongList extends Component {
     });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.reload) {
+      this.getSongList();
+    }
+  }
+
   render() {
     console.log(this.state.data);
     return (

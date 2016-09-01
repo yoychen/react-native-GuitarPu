@@ -4,6 +4,7 @@ export const SET_SINGER = 'SET_SINGER';
 export const SET_NAME = 'SET_NAME';
 export const ADD_TONE = 'ADD_TONE';
 export const REMOVE_TONE = 'REMOVE_TONE';
+export const RESET_SONG = 'RESET_SONG';
 
 // function receivedLyrics(lyrics) {
 //   return {
@@ -63,6 +64,14 @@ export async function removeTone(index) {
     dispatch({
       type: ADD_TONE,
       index,
+    });
+  };
+}
+
+export async function resetSong() {
+  return (dispatch) => {
+    dispatch({
+      type: RESET_SONG,
     });
   };
 }

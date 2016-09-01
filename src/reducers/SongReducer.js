@@ -5,6 +5,7 @@ import {
   SET_KEY,
   ADD_TONE,
   REMOVE_TONE,
+  RESET_SONG,
 } from '../actions/SongActions';
 
 export function song(state = {
@@ -39,6 +40,14 @@ export function song(state = {
       let res2 = Object.assign({}, state);
       res2.tone[action.index] = undefined;
       return res2;
+    case RESET_SONG:
+      return {
+        name: '',
+        singer: '',
+        key: 'C',
+        lyrics: '',
+        tone: [],
+      };
     default:
       return state;
   }

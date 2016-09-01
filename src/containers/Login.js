@@ -22,8 +22,10 @@ import {
   ActivityIndicator,
   TextInput,
   Image,
+  Alert,
+  AsyncStorage,
 } from 'react-native';
-import { setLyrics, setSinger, setKey, setName } from '../actions/SongActions';
+import { setUserInfo } from '../actions/UserActions';
 import { Actions } from 'react-native-router-flux';
 const { height, width } = Dimensions.get('window');
 
@@ -105,9 +107,68 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: '',
+      password: '',
     };
+    this.isSended = false;
+    this.LoginAndSaveToken = this.LoginAndSaveToken.bind(this);
+    AsyncStorage.getItem('token').then(token => {
+      console.log('token>>>'+token);
+      if (token) {
+        this.checkAuth(token);
+      }
+    });
   }
 
+  checkAuth = async (token) => {
+    const url = 'https://guitarpu-backend-sakuxz.c9users.io/api/islogin';
+    try {
+      let res = await fetch(url,{
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-access-token': token
+        },
+      }).then((data) => data.json()).catch((e) => {
+        return false;
+      });
+      if (res) {
+        console.log(res);
+        await this.props.setUserInfo(res.data);
+        Actions.IndexDrawer({ type: 'reset', reload: true });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  LoginAndSaveToken = async () => {
+    const { username, password } = this.state;
+    if (this.isSended) return;
+    this.isSended = true;
+
+    const url = 'https://guitarpu-backend-sakuxz.c9users.io/api/login';
+    let res = await fetch(url,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `username=${username}&password=${password}`,
+    }).then((data) => data.json())
+      .catch((e) => console.log(e));
+    if (res) {
+      this.isSended = false;
+      this.props.setUserInfo({
+        uid: res.data.uid,
+        name: res.data.name,
+      });
+      await AsyncStorage.setItem('token', res.data.token);
+      Actions.IndexDrawer({ type: 'reset', reload: true });
+    } else {
+      Alert.alert('Info', 'username or password was incorrect');
+      this.isSended = false;
+    }
+  }
 
   render() {
     console.log(this.state);
@@ -121,16 +182,16 @@ class Login extends Component {
            <ListItem style={{ marginTop: 15 }}>
              <InputGroup borderType="regular" style={{ borderRadius: 5 }} >
                <Icon name="ios-person" />
-               <Input placeholder="EMAIL" />
+               <Input onChangeText={(username) => {this.setState({username})}} placeholder="NAME" />
              </InputGroup>
            </ListItem>
            <ListItem style={{ marginTop: 10 }}>
              <InputGroup borderType="regular" style={{ borderRadius: 5 }} >
                <Icon name="ios-unlock" />
-               <Input placeholder="PASSWORD" secureTextEntry={true}/>
+               <Input onChangeText={(password) => {this.setState({password})}} placeholder="PASSWORD" secureTextEntry={true}/>
              </InputGroup>
            </ListItem>
-           <Button style={styles.submitBtn} block warning> 登入 </Button>
+           <Button onPress={this.LoginAndSaveToken} style={styles.submitBtn} block warning> 登入 </Button>
            <View style={{ alignItems: 'center' }}>
              <View style={styles.orWrapper}>
                <Text style={styles.orText}>or</Text>
@@ -149,15 +210,12 @@ class Login extends Component {
 function injectPropsFromStore(state) {
   console.log(state);
   return {
-    song: state.song,
+    user: state.user,
   };
 }
 
 const injectPropsFormActions = {
-  setLyrics,
-  setKey,
-  setName,
-  setSinger,
+  setUserInfo,
 };
 
 export default connect(injectPropsFromStore, injectPropsFormActions)(Login);

@@ -150,8 +150,8 @@ class EditTone extends Component {
             <Icon name='ios-arrow-back' />
           </Button>
           <Title>編輯吉他譜</Title>
-          <Button transparent>
-            <Icon name='md-checkmark' onPress={Actions.VertifySong} />
+          <Button transparent onPress={Actions.VertifySong} >
+            <Icon name='md-checkmark' />
           </Button>
         </Header>
         <ScrollView>

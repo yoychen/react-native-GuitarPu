@@ -17,8 +17,9 @@ import {
   ScrollView,
   ActivityIndicator,
   Alert,
+  AsyncStorage,
 } from 'react-native';
-import { setLyrics, addTone, removeTone } from '../actions/SongActions';
+import { resetSong } from '../actions/SongActions';
 import { Actions } from 'react-native-router-flux';
 const { height, width } = Dimensions.get('window');
 
@@ -106,25 +107,32 @@ class VertifySong extends Component {
       loading: false,
     };
     console.disableYellowBox = true;
+    this.isSended = false;
   }
 
   componentDidMount() {
   }
 
   addNewSong = async () => {
+    if(this.isSended) return;
+    this.isSended = true;
     let { name, singer, key, tone, lyrics } = this.props.song;
     tone = JSON.stringify(tone);
+
+    let token = await AsyncStorage.getItem('token');
 
     const url = 'https://guitarpu-backend-sakuxz.c9users.io/api/song';
     let res = await fetch(url,{
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
+        'x-access-token': token
       },
-      body: `name=${name}&singer=${singer}&key=${key}&tone=${tone}&lyrics=${lyrics}&UserId=1`,
+      body: `name=${name}&singer=${singer}&key=${key}&tone=${tone}&lyrics=${lyrics}`,
     }).then((data) => data.json())
       .catch((e) => console.log(e));
-    Actions.IndexDrawer({ type: 'reset' });
+    this.props.resetSong();
+    Actions.IndexDrawer({ type: 'reset', reload: true });
   }
 
   render() {
@@ -195,9 +203,7 @@ function injectPropsFromStore(state) {
 }
 
 const injectPropsFormActions = {
-  setLyrics,
-  addTone,
-  removeTone,
+  resetSong,
 };
 
 export default connect(injectPropsFromStore, injectPropsFormActions)(VertifySong);
