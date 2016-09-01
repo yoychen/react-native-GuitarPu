@@ -228,6 +228,9 @@ class EditTone extends Component {
               <Item label="m" value="m" />
               <Item label="sus4" value="sus4" />
               <Item label="7" value="7" />
+              <Item label="m7" value="m7" />
+              <Item label="maj7" value="maj7" />
+              <Item label="add9" value="add9" />
             </Picker>
           </View>
           <Button onPress={this.addNewTone} disabled={(this.state.selectChar === -1)} warning style={[styles.footerItem, { marginTop: 6 }, disabledBtn]} > Apply </Button>

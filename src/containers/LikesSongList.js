@@ -130,7 +130,7 @@ class SongList extends Component {
           {
             this.state.data.map((e, i) => {
               return (
-                <TouchableOpacity onPress={() => {Actions.SongViewer({ id: e.id })}} key={e.id} >
+                <TouchableOpacity onPress={() => {Actions.SongViewer({ id: e.Song.id })}} key={e.Song.id} >
                   <SongCard hideLike={true} resetSongList={this.getSongList} id={e.Song.id} name={e.Song.name} singer={e.Song.singer} songKey={e.Song.key} />
                 </TouchableOpacity>
               )
