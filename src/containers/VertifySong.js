@@ -132,7 +132,7 @@ class VertifySong extends Component {
     }).then((data) => data.json())
       .catch((e) => console.log(e));
     this.props.resetSong();
-    Actions.IndexDrawer({ type: 'reset', reload: true });
+    Actions.IndexDrawer({ type: 'reset', reload: (new Date()).getTime() });
   }
 
   render() {
